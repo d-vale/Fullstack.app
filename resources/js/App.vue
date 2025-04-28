@@ -1,10 +1,11 @@
 <script setup>
   import { ref } from 'vue';
   const n = ref(1);
+  import Start from './pages/start.vue';
 </script>
 
 <template>
-  <h1>Test</h1>
+    <Start></Start>
 </template>
 
 <style scoped>
