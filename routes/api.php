@@ -30,14 +30,14 @@ Route::prefix('v1')->group(function () {
     });
 
     // Progress routes - protected by authentication
-    Route::middleware('auth:sanctum')->prefix('progress')->group(function () {
+    Route::middleware('auth')->prefix('progress')->group(function () {
         Route::get('/', [ProgressController::class, 'getUserProgress']);
         Route::post('/update', [ProgressController::class, 'updateProgress']);
         Route::post('/reset', [ProgressController::class, 'resetProgress']);
     });
 
     // Admin routes - protected by authentication and admin middleware
-    Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
+    Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
         Route::get('/users/{userId}/progress', [ProgressController::class, 'getProgressByUserId']);
     });
 });

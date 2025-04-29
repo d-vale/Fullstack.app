@@ -44,13 +44,13 @@ This project is built with:
 
 ### Progress (Authentication Required)
 
-- `GET /api/v1/progress` - Get the current user's progress
-- `POST /api/v1/progress/update` - Update progress based on a choice
-- `POST /api/v1/progress/reset` - Reset the user's progress
+- <span style="color:red;">BROKE</span> `GET /api/v1/progress` - Get the current user's progress
+- <span style="color:red;">BROKE</span> `POST /api/v1/progress/update` - Update progress based on a choice
+- <span style="color:red;">BROKE</span> `POST /api/v1/progress/reset` - Reset the user's progress
 
 ### Admin (Authentication and Admin Required)
 
-- `GET /api/v1/admin/users/{userId}/progress` - Get a specific user's progress
+- <span style="color:red;">BROKE</span> `GET /api/v1/admin/users/{userId}/progress` - Get a specific user's progress
 
 ## Installation
 

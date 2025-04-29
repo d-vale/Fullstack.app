@@ -88,7 +88,7 @@ class ChapterController extends Controller
     public function getEndingChapters(): JsonResponse
     {
         try {
-            $endingChapters = Chapter::where('is_final', true)->get();
+            $endingChapters = Chapter::where('id', '>', 15)->get();
 
             return response()->json([
                 'success' => true,
@@ -111,7 +111,7 @@ class ChapterController extends Controller
     public function getFirstChapter(): JsonResponse
     {
         try {
-            $firstChapter = Chapter::where('order', 1)->firstOrFail();
+            $firstChapter = Chapter::where('id', 1)->firstOrFail();
 
             return response()->json([
                 'success' => true,

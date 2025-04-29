@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Choice;
+use App\Models\Chapter;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
@@ -66,11 +67,21 @@ class ChoiceController extends Controller
     public function getNextChapter(int $choiceId): JsonResponse
     {
         try {
-            $choice = Choice::with('nextChapter')->findOrFail($choiceId);
+            $choice = Choice::findOrFail($choiceId);
+            $nextChapterId = $choice->chapter_id + 1;
+
+            $nextChapter = Chapter::find($nextChapterId);
+
+            if (!$nextChapter) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Next chapter not found'
+                ], 404);
+            }
 
             return response()->json([
                 'success' => true,
-                'data' => $choice->nextChapter
+                'data' => $nextChapter
             ]);
         } catch (\Exception $e) {
             return response()->json([
