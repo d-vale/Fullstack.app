@@ -1,66 +1,132 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Crisis Management Simulator
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A web-based crisis management simulator where users make critical decisions to manage a cyberattack on national infrastructure. The application tracks key metrics like public trust, available resources, social impact, and crisis progression.
 
-## About Laravel
+## Project Structure
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This project is built with:
+- **Backend**: Laravel (API)
+- **Frontend**: Vue.js
+- **Database**: SQLite
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Interactive crisis scenario with multiple chapters
+- Decision-based gameplay with consequences
+- Real-time metrics tracking
+- Multiple possible endings based on player decisions
+- Progress saving
+- Responsive design for mobile and desktop
+- User authentication
 
-## Learning Laravel
+## API Endpoints
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Stories
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- `GET /api/v1/stories` - Get all stories
+- `GET /api/v1/stories/{id}` - Get a specific story
+- `GET /api/v1/stories/{storyId}/chapters` - Get all chapters for a story
+- `GET /api/v1/stories/{storyId}/endings` - Get all possible endings for a story
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Chapters
 
-## Laravel Sponsors
+- `GET /api/v1/chapters` - Get all chapters
+- `GET /api/v1/chapters/{id}` - Get a specific chapter
+- `GET /api/v1/chapters/{chapterId}/choices` - Get all choices for a chapter
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Choices
 
-### Premium Partners
+- `GET /api/v1/choices/{id}` - Get a specific choice
+- `GET /api/v1/choices/{choiceId}/impacts` - Get all impacts for a choice
+- `GET /api/v1/choices/{choiceId}/next-chapter` - Get the next chapter for a choice
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Progress (Authentication Required)
 
-## Contributing
+- `GET /api/v1/progress` - Get the current user's progress
+- `POST /api/v1/progress/update` - Update progress based on a choice
+- `POST /api/v1/progress/reset` - Reset the user's progress
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Admin (Authentication and Admin Required)
 
-## Code of Conduct
+- `GET /api/v1/admin/users/{userId}/progress` - Get a specific user's progress
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Installation
 
-## Security Vulnerabilities
+### Prerequisites
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- PHP 8.1 or higher
+- Composer
+- Node.js and npm
+- SQLite
+
+### Setup
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/crisis-management-simulator.git
+   cd crisis-management-simulator
+   ```
+
+2. Install PHP dependencies:
+   ```
+   composer install
+   ```
+
+3. Install JavaScript dependencies:
+   ```
+   npm install
+   ```
+
+4. Create a copy of the `.env.example` file:
+   ```
+   cp .env.example .env
+   ```
+
+5. Generate an application key:
+   ```
+   php artisan key:generate
+   ```
+
+6. Create the SQLite database:
+   ```
+   touch database/database.sqlite
+   ```
+
+7. Configure the `.env` file to use SQLite:
+   ```
+   DB_CONNECTION=sqlite
+   # Comment out or remove the other DB_ variables
+   ```
+
+8. Run migrations and seeders:
+   ```
+   php artisan migrate --seed
+   ```
+
+9. Set up Laravel Sanctum for API authentication:
+   ```
+   php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+   ```
+
+10. Build frontend assets:
+    ```
+    npm run dev
+    ```
+
+11. Start the development server:
+    ```
+    php artisan serve
+    ```
+
+12. Access the application at `http://localhost:8000`
+
+## Testing
+
+Run the test suite:
+```
+php artisan test
+```
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT License.
