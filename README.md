@@ -1,6 +1,6 @@
 # Crisis Management Simulator
 
-A web-based crisis management simulator where users make critical decisions to manage a cyberattack on national infrastructure. The application tracks key metrics like public trust, available resources, social impact, and crisis progression.
+A web-based crisis management simulator where users make critical decisions during a cyberattack on national infrastructure. The application tracks key metrics like public trust, available resources, social impact, and crisis progression.
 
 ## Project Structure
 
@@ -12,25 +12,27 @@ This project is built with:
 ## Features
 
 - Interactive crisis scenario with multiple chapters
-- Decision-based gameplay with consequences
-- Real-time metrics tracking
+- Decision-based gameplay with real-time consequence tracking
+- Key metric monitoring (public trust, resources, social impact, and crisis level)
 - Multiple possible endings based on player decisions
 - Progress saving
 - Responsive design for mobile and desktop
 - User authentication
 
+## Key Metrics
+
+- **Public Trust** (0-100%): Represents population's confidence in your leadership
+- **Available Resources** (0+): Represents remaining crisis management resources
+- **Social Impact** (0-100%): Represents the severity of societal disruption
+- **Crisis Progress** (0-100%): Represents how far the crisis has progressed (lower is better)
+
 ## API Endpoints
-
-### Stories
-
-- `GET /api/v1/stories` - Get all stories
-- `GET /api/v1/stories/{id}` - Get a specific story
-- `GET /api/v1/stories/{storyId}/chapters` - Get all chapters for a story
-- `GET /api/v1/stories/{storyId}/endings` - Get all possible endings for a story
 
 ### Chapters
 
 - `GET /api/v1/chapters` - Get all chapters
+- `GET /api/v1/chapters/first` - Get the first chapter (entry point)
+- `GET /api/v1/chapters/endings` - Get all possible ending chapters
 - `GET /api/v1/chapters/{id}` - Get a specific chapter
 - `GET /api/v1/chapters/{chapterId}/choices` - Get all choices for a chapter
 
