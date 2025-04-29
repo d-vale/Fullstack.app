@@ -2,22 +2,30 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
+     *
+     * @return void
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Désactiver les contraintes de clés étrangères
+        Schema::disableForeignKeyConstraints();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // Exécuter les seeders dans l'ordre approprié
+        $this->call([
+            UserSeeder::class,      // D'abord les utilisateurs
+            ChapterSeeder::class,   // Ensuite les chapitres
+            ChoiceSeeder::class,    // Puis les choix
+            ProgressSeeder::class,  // Enfin les progressions
         ]);
+
+        // Réactiver les contraintes de clés étrangères
+        Schema::enableForeignKeyConstraints();
     }
 }
