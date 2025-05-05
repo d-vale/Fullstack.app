@@ -53,7 +53,7 @@ class ProgressController extends Controller
 
             return response()->json([
                 'success' => true,
-                'data' => $progress
+                'data' => array_merge($progress->toArray(), ['user_name' => $user->name])
             ]);
 
         } catch (\Exception $e) {

@@ -8,16 +8,12 @@ use App\Http\Controllers\ChoiceController;
 use App\Http\Controllers\ProgressController;
 
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/start', function () {
     return view('vue');
 })->middleware(['auth', 'verified'])->name('start');
 
-Route::get('/dashboard', function () {
+/* Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard'); */
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -51,8 +47,8 @@ Route::prefix('v1')->group(function () {
     // Progress routes - protected by authentication
     Route::middleware('auth')->prefix('progress')->group(function () {
         Route::get('/', [ProgressController::class, 'getUserProgress']);
-        Route::post('/update', [ProgressController::class, 'updateProgress']);
-        Route::post('/reset', [ProgressController::class, 'resetProgress']);
+        Route::patch('/update', [ProgressController::class, 'updateProgress']);
+        Route::patch('/reset', [ProgressController::class, 'resetProgress']);
     });
 
     // Admin routes - protected by authentication and admin middleware

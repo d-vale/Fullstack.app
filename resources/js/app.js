@@ -1,11 +1,10 @@
-import './bootstrap';
+import { createApp } from 'vue';
+import { setDefaultHeaders } from '@/utils/fetchJson.js';
+import App from './App.vue';
 
-import Alpine from 'alpinejs';
-import { createApp } from 'vue'
-import App from './App.vue'
+const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ?? '';
+setDefaultHeaders({'X-CSRF-TOKEN': csrfToken});
 
-window.Alpine = Alpine;
 
-Alpine.start();
-
-createApp(App).mount('#app')
+const myApp = createApp(App);
+myApp.mount('#app');
