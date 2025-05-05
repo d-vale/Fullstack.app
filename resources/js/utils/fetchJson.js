@@ -4,7 +4,7 @@ const defaultHeaders = {
   'Accept': 'application/json',
 };
 
-let defaultBaseUrl = '';
+let defaultBaseUrl = 'http://localhost:8000';
 
 /**
  * Update the default headers
