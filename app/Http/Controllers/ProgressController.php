@@ -194,16 +194,13 @@ class ProgressController extends Controller
                 ], 401);
             }
 
-            // Create a new progress record with default values
-            $progress = new Progress([
-                'user_id' => $user->id,
-                'public_trust' => 65,
-                'available_resources' => 100,
-                'social_impact' => 30,
-                'crisis_progress' => 15,
-                'current_chapter_id' => 1,
-                'completed' => false
-            ]);
+            $progress = Progress::where('user_id', $user->id)->latest()->first();
+
+            $progress->chapter_id = 1;
+            $progress->confiance = 65;
+            $progress->ressources = 100;
+            $progress->impact = 30;
+            $progress->crise = 15;
 
             // Save the new progress
             $progress->save();

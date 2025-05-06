@@ -86,17 +86,13 @@ function loadChoicesForChapter(chapterId) {
 }
 
 function makeChoice(choice) {
-
     const { data: reponse, error } = useFetchJson({
         url: "/v1/progress/update",
         method: "PATCH",
         data: {
-            choice_id: choice.id
-        }
+            choice_id: choice.id,
+        },
     });
-
-    console.log(reponse);
-    console.log(error);
 
     watch(reponse, (progressUpdate) => {
         if (progressUpdate.success && progressUpdate.data) {
@@ -121,47 +117,27 @@ function makeChoice(choice) {
     });
 }
 
-async function resetProgress() {
-    try {
-        const csrfToken = document
-            .querySelector('meta[name="csrf-token"]')
-            ?.getAttribute("content");
+function resetProgress() {
+    const { data: reponse, error } = useFetchJson({
+        url: "/v1/progress/reset",
+        method: "PATCH",
+    });
 
-        const response = await fetch("/v1/progress/reset", {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": csrfToken,
-            },
-        });
-
-        if (!response.ok) {
-            throw new Error(`Erreur HTTP! Statut: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data.success) {
+    watch(reponse, (resetStatus) => {
+        if (resetStatus.success) {
             userProgress.value = {
                 confiance: 65,
                 ressources: 100,
                 impact: 30,
                 crise: 15,
             };
-
             loadFirstChapter();
+            loading.value = false;
         } else {
-            error.value = "Impossible de réinitialiser votre progression.";
+            console.log(error);
+            loading.value = true;
         }
-    } catch (err) {
-        console.error(
-            "Erreur lors de la réinitialisation de la progression:",
-            err
-        );
-        error.value =
-            "Erreur lors de la réinitialisation de votre progression.";
-    }
+    });
 }
 </script>
 

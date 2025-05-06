@@ -51,6 +51,7 @@ Route::prefix('v1')->group(function () {
         Route::patch('/reset', [ProgressController::class, 'resetProgress']);
     });
 
+
     // Admin routes - protected by authentication and admin middleware
     Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
         Route::get('/users/{userId}/progress', [ProgressController::class, 'getProgressByUserId']);
