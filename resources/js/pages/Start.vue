@@ -86,6 +86,7 @@ function loadChoicesForChapter(chapterId) {
 }
 
 function makeChoice(choice) {
+
     const { data: reponse, error } = useFetchJson({
         url: "/v1/progress/update",
         method: "PATCH",

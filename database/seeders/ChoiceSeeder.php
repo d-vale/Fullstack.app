@@ -463,6 +463,7 @@ class ChoiceSeeder extends Seeder
                 'ressources' => $choice['ressources'],
                 'impact' => $choice['impact'],
                 'crise' => $choice['crise'],
+                'next_chapter' => $choice['next_chapter'],
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);

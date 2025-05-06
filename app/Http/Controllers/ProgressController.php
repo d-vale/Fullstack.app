@@ -55,7 +55,6 @@ class ProgressController extends Controller
                 'success' => true,
                 'data' => array_merge($progress->toArray(), ['user_name' => $user->name])
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -92,7 +91,6 @@ class ProgressController extends Controller
                 'success' => true,
                 'data' => $progress
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -112,7 +110,7 @@ class ProgressController extends Controller
     {
         try {
             // Validate the request
-            $request->validate([
+                $request->validate([
                 'choice_id' => 'required|integer|exists:choices,id',
             ]);
 
@@ -127,7 +125,7 @@ class ProgressController extends Controller
             }
 
             // Get the choice and its impacts
-            $choice = Choice::with(['impacts', 'nextChapter'])->findOrFail($request->choice_id);
+            $choice = Choice::findOrFail($request->choice_id);
 
             // Get current progress or create new one
             $progress = Progress::where('user_id', $user->id)->latest()->first();
@@ -135,53 +133,23 @@ class ProgressController extends Controller
             if (!$progress) {
                 // Create a new progress record with default values
                 $progress = new Progress([
+                    'chapter_id' => 1,
                     'user_id' => $user->id,
                     'confiance' => 65,
                     'ressources' => 100,
                     'impact' => 30,
                     'crise' => 15,
                     'chapter_id' => 1,
-                    'completed' => false
                 ]);
             }
 
-            // Start a database transaction to ensure data consistency
-            DB::beginTransaction();
-
             try {
-                // Apply impacts to progress
-                foreach ($choice->impacts as $impact) {
-                    switch ($impact->type) {
-                        case 'confiance':
-                            $progress->confiance += $impact->value;
-                            break;
-                        case 'ressources':
-                            $progress->ressources += $impact->value;
-                            break;
-                        case 'impact':
-                            $progress->impact += $impact->value;
-                            break;
-                        case 'crise':
-                            $progress->crise += $impact->value;
-                            break;
-                    }
-                }
+                $progress->confiance += $choice->confiance;
+                $progress->ressources += $choice->ressources;
+                $progress->impact += $choice->impact;
+                $progress->crise += $choice->crise;
+                $progress->chapter_id = $choice->next_chapter;
 
-                // Ensure values are within valid ranges
-                $progress->confiance = max(0, min(100, $progress->confiance));
-                $progress->ressources = max(0, $progress->ressources);
-                $progress->impact = max(0, min(100, $progress->impact));
-                $progress->crise = max(0, min(100, $progress->crise));
-
-                // Update the current chapter to the next chapter
-                if ($choice->nextChapter) {
-                    $progress->chapter_id = $choice->nextChapter->id;
-
-                    // Check if this is the final chapter
-                    if ($choice->nextChapter->is_final) {
-                        $progress->completed = true;
-                    }
-                }
 
                 // Save the updated progress
                 $progress->save();
@@ -194,13 +162,11 @@ class ProgressController extends Controller
                     'data' => $progress,
                     'message' => 'Progress updated successfully'
                 ]);
-
             } catch (\Exception $e) {
                 // Rollback the transaction if something goes wrong
                 DB::rollBack();
                 throw $e;
             }
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -247,7 +213,6 @@ class ProgressController extends Controller
                 'data' => $progress,
                 'message' => 'Progress reset successfully'
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,

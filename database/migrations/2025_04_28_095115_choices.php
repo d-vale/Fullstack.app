@@ -24,6 +24,12 @@ return new class extends Migration
             $table->integer('ressources');
             $table->integer('impact');
             $table->integer('crise');
+            $table->integer('next_chapter')->unsigned()->nullable();
+            $table->foreign('next_chapter')
+                ->references('id')
+                ->on('chapters')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
             $table->timestamps();
         });
     }
