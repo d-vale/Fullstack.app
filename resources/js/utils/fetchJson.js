@@ -4,7 +4,7 @@ const defaultHeaders = {
   'Accept': 'application/json',
 };
 
-let defaultBaseUrl = 'http://localhost:8000';
+let defaultBaseUrl = '';
 
 /**
  * Update the default headers
@@ -44,7 +44,7 @@ export function fetchJson(options) {
     url,
     data = null,
     method = null,
-    headers = {},
+    headers = { },
     timeout = 5000,
     baseUrl = null,
   } = options;

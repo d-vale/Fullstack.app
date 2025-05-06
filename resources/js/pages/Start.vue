@@ -20,160 +20,104 @@ onMounted(() => {
     loadUserProgress();
 });
 
-async function loadUserProgress() {
-        const { data: reponse, error } = useFetchJson("/v1/progress");
-        watch(reponse, (progress) => {
-            console.log("Data:", progress);
-
-            if (progress.success && progress.data) {
-                userName.value = progress.data.user_name || "Invité";
-                console.log(progress.data.user_name);
-                userProgress.value = {
-                    confiance: progress.data.confiance || 65,
-                    ressources: progress.data.ressources || 100,
-                    impact: progress.data.impact || 30,
-                    crise: progress.data.crise || 15,
-                };
-
-                if (progress.data.chapter_id) {
-                    loadChapter(progress.data.chapter_id);
-                } else {
-                    loadFirstChapter();
-                }
-                loading.value = false;
-            } else {
-                console.error(error);
-                loading.value = true;
-            }
-        });
-    }
-
-async function loadFirstChapter() {
-    try {
-        const response = await fetch("/v1/chapters/first", {
-            headers: {
-                Accept: "application/json",
-            },
-        });
-
-        if (!response.ok) {
-            throw new Error(`Erreur HTTP! Statut: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data.success && data.data) {
-            currentChapter.value = data.data;
-            loadChoicesForChapter(data.data.id);
-        } else {
-            error.value = "Impossible de charger le premier chapitre.";
-        }
-    } catch (err) {
-        console.error("Erreur lors du chargement du premier chapitre:", err);
-        error.value = "Erreur lors du chargement du scénario.";
-    }
-}
-
-async function loadChapter(chapterId) {
-    try {
-        const response = await fetch(`/v1/chapters/${chapterId}`, {
-            headers: {
-                Accept: "application/json",
-            },
-        });
-
-        if (!response.ok) {
-            throw new Error(`Erreur HTTP! Statut: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data.success && data.data) {
-            currentChapter.value = data.data;
-            loadChoicesForChapter(chapterId);
-        } else {
-            error.value = "Impossible de charger le chapitre demandé.";
-        }
-    } catch (err) {
-        console.error(
-            `Erreur lors du chargement du chapitre ${chapterId}:`,
-            err
-        );
-        error.value = "Erreur lors du chargement du chapitre.";
-    }
-}
-
-async function loadChoicesForChapter(chapterId) {
-    try {
-        const response = await fetch(`/v1/chapters/${chapterId}/choices`, {
-            headers: {
-                Accept: "application/json",
-            },
-        });
-
-        if (!response.ok) {
-            throw new Error(`Erreur HTTP! Statut: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data.success && data.data) {
-            choices.value = data.data;
-        } else {
-            error.value = "Impossible de charger les choix pour ce chapitre.";
-        }
-    } catch (err) {
-        console.error(
-            `Erreur lors du chargement des choix pour le chapitre ${chapterId}:`,
-            err
-        );
-        error.value = "Erreur lors du chargement des options.";
-    }
-}
-
-async function makeChoice(choice) {
-    try {
-        const csrfToken = document
-            .querySelector('meta[name="csrf-token"]')
-            ?.getAttribute("content");
-
-        const response = await fetch("/v1/progress/update", {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": csrfToken,
-            },
-            body: JSON.stringify({
-                choice_id: choice.id,
-            }),
-        });
-
-        if (!response.ok) {
-            throw new Error(`Erreur HTTP! Statut: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data.success && data.data) {
+function loadUserProgress() {
+    const { data: reponse, error } = useFetchJson("/v1/progress");
+    watch(reponse, (progress) => {
+        if (progress.success && progress.data) {
+            userName.value = progress.data.user_name || "Invité";
             userProgress.value = {
-                confiance: data.data.confiance || userProgress.value.confiance,
-                ressources:
-                    data.data.ressources || userProgress.value.ressources,
-                impact: data.data.impact || userProgress.value.impact,
-                crise: data.data.crise || userProgress.value.crise,
+                confiance: progress.data.confiance || 65,
+                ressources: progress.data.ressources || 100,
+                impact: progress.data.impact || 30,
+                crise: progress.data.crise || 15,
             };
 
-            if (data.data.chapter_id) {
-                loadChapter(data.data.chapter_id);
+            if (progress.data.chapter_id) {
+                loadChapter(progress.data.chapter_id);
+            } else {
+                loadFirstChapter();
+            }
+            loading.value = false;
+        } else {
+            console.error(error);
+            loading.value = true;
+        }
+    });
+}
+
+function loadFirstChapter() {
+    const { data: reponse, error } = useFetchJson("/v1/chapters/first");
+    watch(reponse, (firstchapter) => {
+        if (firstchapter.success && firstchapter.data) {
+            currentChapter.value = firstchapter.data;
+            loadChoicesForChapter(firstchapter.data.id);
+        } else {
+            console.error(error);
+            loading.value = true;
+        }
+    });
+}
+
+function loadChapter(chapterId) {
+    const { data: reponse, error } = useFetchJson(`/v1/chapters/${chapterId}`);
+    watch(reponse, (chapter) => {
+        if (chapter.success && chapter.data) {
+            currentChapter.value = chapter.data;
+            loadChoicesForChapter(chapterId);
+        } else {
+            console.error(error);
+            loading.value = true;
+        }
+    });
+}
+
+function loadChoicesForChapter(chapterId) {
+    const { data: reponse, error } = useFetchJson(
+        `/v1/chapters/${chapterId}/choices`
+    );
+    watch(reponse, (choiceByChapter) => {
+        if (choiceByChapter.success && choiceByChapter.data) {
+            choices.value = choiceByChapter.data;
+        } else {
+            console.error(error);
+            loading.value = true;
+        }
+    });
+}
+
+function makeChoice(choice) {
+    const { data: reponse, error } = useFetchJson({
+        url: "/v1/progress/update",
+        method: "PATCH",
+        data: {
+            choice_id: choice.id
+        }
+    });
+
+    console.log(reponse);
+    console.log(error);
+
+    watch(reponse, (progressUpdate) => {
+        if (progressUpdate.success && progressUpdate.data) {
+            userProgress.value = {
+                confiance:
+                    progressUpdate.data.confiance ||
+                    userProgress.value.confiance,
+                ressources:
+                    progressUpdate.data.ressources ||
+                    userProgress.value.ressources,
+                impact: progressUpdate.data.impact || userProgress.value.impact,
+                crise: progressUpdate.data.crise || userProgress.value.crise,
+            };
+
+            if (progressUpdate.data.chapter_id) {
+                loadChapter(progressUpdate.data.chapter_id);
             }
         } else {
-            error.value = "Impossible de mettre à jour votre progression.";
+            console.error(error.value);
+            loading.value = true;
         }
-    } catch (err) {
-        console.error("Erreur lors de la mise à jour de la progression:", err);
-        error.value = "Erreur lors de la mise à jour de votre progression.";
-    }
+    });
 }
 
 async function resetProgress() {

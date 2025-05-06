@@ -136,11 +136,11 @@ class ProgressController extends Controller
                 // Create a new progress record with default values
                 $progress = new Progress([
                     'user_id' => $user->id,
-                    'public_trust' => 65,
-                    'available_resources' => 100,
-                    'social_impact' => 30,
-                    'crisis_progress' => 15,
-                    'current_chapter_id' => 1,
+                    'confiance' => 65,
+                    'ressources' => 100,
+                    'impact' => 30,
+                    'crise' => 15,
+                    'chapter_id' => 1,
                     'completed' => false
                 ]);
             }
@@ -152,30 +152,30 @@ class ProgressController extends Controller
                 // Apply impacts to progress
                 foreach ($choice->impacts as $impact) {
                     switch ($impact->type) {
-                        case 'public_trust':
-                            $progress->public_trust += $impact->value;
+                        case 'confiance':
+                            $progress->confiance += $impact->value;
                             break;
-                        case 'available_resources':
-                            $progress->available_resources += $impact->value;
+                        case 'ressources':
+                            $progress->ressources += $impact->value;
                             break;
-                        case 'social_impact':
-                            $progress->social_impact += $impact->value;
+                        case 'impact':
+                            $progress->impact += $impact->value;
                             break;
-                        case 'crisis_progress':
-                            $progress->crisis_progress += $impact->value;
+                        case 'crise':
+                            $progress->crise += $impact->value;
                             break;
                     }
                 }
 
                 // Ensure values are within valid ranges
-                $progress->public_trust = max(0, min(100, $progress->public_trust));
-                $progress->available_resources = max(0, $progress->available_resources);
-                $progress->social_impact = max(0, min(100, $progress->social_impact));
-                $progress->crisis_progress = max(0, min(100, $progress->crisis_progress));
+                $progress->confiance = max(0, min(100, $progress->confiance));
+                $progress->ressources = max(0, $progress->ressources);
+                $progress->impact = max(0, min(100, $progress->impact));
+                $progress->crise = max(0, min(100, $progress->crise));
 
                 // Update the current chapter to the next chapter
                 if ($choice->nextChapter) {
-                    $progress->current_chapter_id = $choice->nextChapter->id;
+                    $progress->chapter_id = $choice->nextChapter->id;
 
                     // Check if this is the final chapter
                     if ($choice->nextChapter->is_final) {
