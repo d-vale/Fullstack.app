@@ -144,12 +144,16 @@ class ProgressController extends Controller
             }
 
             try {
-                $progress->confiance += $choice->confiance;
-                $progress->ressources += $choice->ressources;
-                $progress->impact += $choice->impact;
-                $progress->crise += $choice->crise;
-                $progress->chapter_id = $choice->next_chapter;
-
+                $progress->confiance = max(0, min(100, $progress->confiance + $choice->confiance));
+                $progress->ressources = max(0, min(100, $progress->ressources + $choice->ressources));
+                $progress->impact = max(0, min(100, $progress->impact + $choice->impact));
+                $progress->crise = max(0, min(100, $progress->crise + $choice->crise));
+                
+                if($choice->next_chapter){
+                    $progress->chapter_id = $choice->next_chapter;
+                } else {
+                    $progress->chapter_id = 16;
+                }
 
                 // Save the updated progress
                 $progress->save();

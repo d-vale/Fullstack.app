@@ -32,7 +32,10 @@ function loadUserProgress() {
                 crise: progress.data.crise || 15,
             };
 
-            if (progress.data.chapter_id) {
+            if (progress.data.chapter_id == 15) {
+                loadEndGame();
+                loading.value = false;
+            } else if (progress.data.chapter_id) {
                 loadChapter(progress.data.chapter_id);
             } else {
                 loadFirstChapter();
@@ -93,21 +96,20 @@ function makeChoice(choice) {
             choice_id: choice.id,
         },
     });
-
     watch(reponse, (progressUpdate) => {
         if (progressUpdate.success && progressUpdate.data) {
             userProgress.value = {
-                confiance:
-                    progressUpdate.data.confiance ||
-                    userProgress.value.confiance,
-                ressources:
-                    progressUpdate.data.ressources ||
-                    userProgress.value.ressources,
-                impact: progressUpdate.data.impact || userProgress.value.impact,
-                crise: progressUpdate.data.crise || userProgress.value.crise,
+                confiance: progressUpdate.data.confiance,
+                ressources: progressUpdate.data.ressources,
+                impact: progressUpdate.data.impact,
+                crise: progressUpdate.data.crise,
             };
 
-            if (progressUpdate.data.chapter_id) {
+            console.log(choice.next_chapter);
+
+            if (progressUpdate.data.chapter_id == 16) {
+                loadEndGame();
+            } else if (progressUpdate.data.chapter_id) {
                 loadChapter(progressUpdate.data.chapter_id);
             }
         } else {
@@ -138,6 +140,67 @@ function resetProgress() {
             loading.value = true;
         }
     });
+}
+
+function loadEndGame() {
+    // 1. Leader visionnaire
+    if (
+        userProgress.value.confiance >= 75 &&
+        userProgress.value.ressources > 20 &&
+        userProgress.value.impact < 20 &&
+        userProgress.value.crise < 10
+    ) {
+        loadChapter(16);
+    }
+    // 2. Gestionnaire efficace
+    else if (
+        userProgress.value.confiance > 60 &&
+        userProgress.value.impact < 35 &&
+        userProgress.value.crise < 25
+    ) {
+        loadChapter(17);
+    }
+    // 3. Équilibre pragmatique
+    else if (
+        userProgress.value.confiance >= 40 &&
+        userProgress.value.confiance <= 60 &&
+        userProgress.value.impact >= 25 &&
+        userProgress.value.impact <= 45 &&
+        userProgress.value.crise < 40
+    ) {
+        loadChapter(18);
+    }
+    // 4. Résolution coûteuse
+    else if (
+        userProgress.value.confiance >= 30 &&
+        userProgress.value.confiance <= 50 &&
+        userProgress.value.ressources < 15 &&
+        userProgress.value.crise < 50
+    ) {
+        loadChapter(19);
+    }
+    // 5. Échec stratégique
+    else if (
+        userProgress.value.confiance < 30 &&
+        userProgress.value.impact > 50 &&
+        userProgress.value.crise >= 30 &&
+        userProgress.value.crise <= 60
+    ) {
+        loadChapter(20);
+    }
+    // 6. Catastrophe nationale
+    else if (
+        userProgress.value.confiance < 20 &&
+        userProgress.value.impact > 60 &&
+        userProgress.value.crise > 60
+    ) {
+        loadChapter(21);
+    }
+    // Cas par défaut si aucun critère ne correspond
+    else {
+        // Équilibre pragmatique par défaut (comme indiqué dans votre modèle Progress.php)
+        loadChapter(18);
+    }
 }
 </script>
 
