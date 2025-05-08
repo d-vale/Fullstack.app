@@ -4,6 +4,9 @@ import Header from "../components/Header.vue";
 import ChapterDisplay from "../components/ChapterDisplay.vue";
 import { useFetchJson } from "../composables/useFetchJson.js";
 
+// Définition des émetteurs d'événements pour communiquer avec le parent
+const emit = defineEmits(["return-to-dashboard"]);
+
 const userName = ref("");
 const userProgress = ref({
     confiance: 65,
@@ -21,9 +24,9 @@ onMounted(() => {
 });
 
 function loadUserProgress() {
-    const { data: reponse, error } = useFetchJson("/v1/progress");
+    const { data: reponse, error: fetchError } = useFetchJson("/v1/progress");
     watch(reponse, (progress) => {
-        if (progress.success && progress.data) {
+        if (progress && progress.success && progress.data) {
             userName.value = progress.data.user_name || "Invité";
             userProgress.value = {
                 confiance: progress.data.confiance || 65,
@@ -32,8 +35,8 @@ function loadUserProgress() {
                 crise: progress.data.crise || 15,
             };
 
-            if (progress.data.chapter_id == 15) {
-                loadEndGame();
+            if (progress.data.chapter_id >= 16) {
+                loadEndGame(progress.data.chapter_id);
                 loading.value = false;
             } else if (progress.data.chapter_id) {
                 loadChapter(progress.data.chapter_id);
@@ -42,54 +45,65 @@ function loadUserProgress() {
             }
             loading.value = false;
         } else {
-            console.error(error);
-            loading.value = true;
+            console.error(fetchError);
+            error.value = "Erreur lors du chargement des données";
+            loading.value = false;
         }
     });
 }
 
 function loadFirstChapter() {
-    const { data: reponse, error } = useFetchJson("/v1/chapters/first");
+    const { data: reponse, error: fetchError } =
+        useFetchJson("/v1/chapters/first");
     watch(reponse, (firstchapter) => {
-        if (firstchapter.success && firstchapter.data) {
+        if (firstchapter && firstchapter.success && firstchapter.data) {
             currentChapter.value = firstchapter.data;
             loadChoicesForChapter(firstchapter.data.id);
         } else {
-            console.error(error);
-            loading.value = true;
+            console.error(fetchError);
+            error.value = "Erreur lors du chargement du premier chapitre";
+            loading.value = false;
         }
     });
 }
 
 function loadChapter(chapterId) {
-    const { data: reponse, error } = useFetchJson(`/v1/chapters/${chapterId}`);
+    const { data: reponse, error: fetchError } = useFetchJson(
+        `/v1/chapters/${chapterId}`
+    );
     watch(reponse, (chapter) => {
-        if (chapter.success && chapter.data) {
+        if (chapter && chapter.success && chapter.data) {
             currentChapter.value = chapter.data;
             loadChoicesForChapter(chapterId);
         } else {
-            console.error(error);
-            loading.value = true;
+            console.error(fetchError);
+            error.value = "Erreur lors du chargement du chapitre";
+            loading.value = false;
         }
     });
 }
 
 function loadChoicesForChapter(chapterId) {
-    const { data: reponse, error } = useFetchJson(
+    const { data: reponse, error: fetchError } = useFetchJson(
         `/v1/chapters/${chapterId}/choices`
     );
     watch(reponse, (choiceByChapter) => {
-        if (choiceByChapter.success && choiceByChapter.data) {
+        if (
+            choiceByChapter &&
+            choiceByChapter.success &&
+            choiceByChapter.data
+        ) {
             choices.value = choiceByChapter.data;
         } else {
-            console.error(error);
-            loading.value = true;
+            console.error(fetchError);
+            error.value = "Erreur lors du chargement des choix";
+            loading.value = false;
         }
     });
 }
 
 function makeChoice(choice) {
-    const { data: reponse, error } = useFetchJson({
+    const { data: reponse, error: fetchError } = useFetchJson({
         url: "/v1/progress/update",
         method: "PATCH",
         data: {
@@ -97,7 +111,7 @@ function makeChoice(choice) {
         },
     });
     watch(reponse, (progressUpdate) => {
-        if (progressUpdate.success && progressUpdate.data) {
+        if (progressUpdate && progressUpdate.success && progressUpdate.data) {
             userProgress.value = {
                 confiance: progressUpdate.data.confiance,
                 ressources: progressUpdate.data.ressources,
@@ -105,28 +119,27 @@ function makeChoice(choice) {
                 crise: progressUpdate.data.crise,
             };
 
-            console.log(choice.next_chapter);
-
-            if (progressUpdate.data.chapter_id == 16) {
-                loadEndGame();
+            if (progressUpdate.data.chapter_id >= 16) {
+                // Chapitre de fin de jeu
+                loadChapter(progressUpdate.data.chapter_id);
             } else if (progressUpdate.data.chapter_id) {
                 loadChapter(progressUpdate.data.chapter_id);
             }
         } else {
-            console.error(error.value);
-            loading.value = true;
+            console.error(fetchError);
+            error.value = "Erreur lors de la mise à jour de la progression";
         }
     });
 }
 
 function resetProgress() {
-    const { data: reponse, error } = useFetchJson({
+    const { data: reponse, error: fetchError } = useFetchJson({
         url: "/v1/progress/reset",
         method: "PATCH",
     });
 
     watch(reponse, (resetStatus) => {
-        if (resetStatus.success) {
+        if (resetStatus && resetStatus.success) {
             userProgress.value = {
                 confiance: 65,
                 ressources: 100,
@@ -136,19 +149,28 @@ function resetProgress() {
             loadFirstChapter();
             loading.value = false;
         } else {
-            console.log(error);
-            loading.value = true;
+            console.error(fetchError);
+            error.value = "Erreur lors de la réinitialisation";
+            loading.value = false;
         }
     });
 }
 
-function loadEndGame() {
+function loadEndGame(endChapterId) {
+    if (endChapterId) {
+        // Si on a déjà un chapitre de fin, le charger directement
+        loadChapter(endChapterId);
+        return;
+    }
+
+    // Déterminer quelle fin montrer en fonction des métriques
+
     // 1. Leader visionnaire
     if (
-        userProgress.value.confiance > 75 &&
+        userProgress.value.confiance >= 75 &&
+        userProgress.value.ressources > 20 &&
         userProgress.value.impact < 20 &&
-        userProgress.value.crise < 15 &&
-        userProgress.value.ressources > 15
+        userProgress.value.crise < 10
     ) {
         loadChapter(16);
     }
@@ -156,8 +178,7 @@ function loadEndGame() {
     else if (
         userProgress.value.confiance > 60 &&
         userProgress.value.impact < 35 &&
-        userProgress.value.crise < 25 &&
-        userProgress.value.ressources > 0
+        userProgress.value.crise < 25
     ) {
         loadChapter(17);
     }
@@ -165,10 +186,9 @@ function loadEndGame() {
     else if (
         userProgress.value.confiance >= 40 &&
         userProgress.value.confiance <= 60 &&
-        userProgress.value.impact >= 20 &&
+        userProgress.value.impact >= 25 &&
         userProgress.value.impact <= 45 &&
-        userProgress.value.crise < 40 &&
-        userProgress.value.ressources > -20
+        userProgress.value.crise < 40
     ) {
         loadChapter(18);
     }
@@ -176,9 +196,8 @@ function loadEndGame() {
     else if (
         userProgress.value.confiance >= 30 &&
         userProgress.value.confiance <= 50 &&
-        userProgress.value.ressources < 0 &&
-        userProgress.value.crise < 50 &&
-        userProgress.value.impact < 50
+        userProgress.value.ressources < 15 &&
+        userProgress.value.crise < 50
     ) {
         loadChapter(19);
     }
@@ -205,6 +224,10 @@ function loadEndGame() {
         loadChapter(18);
     }
 }
+
+function returnToDashboard() {
+    emit("return-to-dashboard");
+}
 </script>
 
 <template>
@@ -212,6 +235,13 @@ function loadEndGame() {
         <Header :userName="userName" :metrics="userProgress" />
 
         <main class="content">
+            <div class="top-controls">
+                <button @click="returnToDashboard" class="return-btn">
+                    <span class="return-icon">&#8592;</span> RETOUR AU CENTRE DE
+                    SIMULATION
+                </button>
+            </div>
+
             <div v-if="loading" class="loading pixel-container">
                 <div class="spinner pixel-spinner"></div>
                 <p class="pixel-text">CHARGEMENT...</p>
@@ -258,6 +288,37 @@ function loadEndGame() {
     flex: 1;
 }
 
+.top-controls {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.return-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.2rem;
+    background-color: var(--secondary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.return-btn:hover {
+    background-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.return-icon {
+    font-size: 1.2rem;
+}
+
 .loading {
     display: flex;
     flex-direction: column;
@@ -298,6 +359,17 @@ function loadEndGame() {
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     color: var(--danger);
+}
+
+.retry-btn {
+    margin-top: 1rem;
+    padding: 0.6rem 1.2rem;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
 }
 
 .reset-container {
@@ -345,6 +417,15 @@ function loadEndGame() {
 @media (max-width: 768px) {
     .content {
         padding: 1rem;
+    }
+
+    .top-controls {
+        margin-bottom: 1rem;
+    }
+
+    .return-btn {
+        font-size: 0.8rem;
+        padding: 0.6rem 1rem;
     }
 }
 </style>

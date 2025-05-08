@@ -25,7 +25,6 @@ Route::middleware('auth')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
 // API version 1 routes
 Route::prefix('v1')->group(function () {
     // Chapters routes
