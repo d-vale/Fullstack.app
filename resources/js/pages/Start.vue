@@ -145,10 +145,10 @@ function resetProgress() {
 function loadEndGame() {
     // 1. Leader visionnaire
     if (
-        userProgress.value.confiance >= 75 &&
-        userProgress.value.ressources > 20 &&
+        userProgress.value.confiance > 75 &&
         userProgress.value.impact < 20 &&
-        userProgress.value.crise < 10
+        userProgress.value.crise < 15 &&
+        userProgress.value.ressources > 15
     ) {
         loadChapter(16);
     }
@@ -156,7 +156,8 @@ function loadEndGame() {
     else if (
         userProgress.value.confiance > 60 &&
         userProgress.value.impact < 35 &&
-        userProgress.value.crise < 25
+        userProgress.value.crise < 25 &&
+        userProgress.value.ressources > 0
     ) {
         loadChapter(17);
     }
@@ -164,9 +165,10 @@ function loadEndGame() {
     else if (
         userProgress.value.confiance >= 40 &&
         userProgress.value.confiance <= 60 &&
-        userProgress.value.impact >= 25 &&
+        userProgress.value.impact >= 20 &&
         userProgress.value.impact <= 45 &&
-        userProgress.value.crise < 40
+        userProgress.value.crise < 40 &&
+        userProgress.value.ressources > -20
     ) {
         loadChapter(18);
     }
@@ -174,8 +176,9 @@ function loadEndGame() {
     else if (
         userProgress.value.confiance >= 30 &&
         userProgress.value.confiance <= 50 &&
-        userProgress.value.ressources < 15 &&
-        userProgress.value.crise < 50
+        userProgress.value.ressources < 0 &&
+        userProgress.value.crise < 50 &&
+        userProgress.value.impact < 50
     ) {
         loadChapter(19);
     }
@@ -198,7 +201,7 @@ function loadEndGame() {
     }
     // Cas par défaut si aucun critère ne correspond
     else {
-        // Équilibre pragmatique par défaut (comme indiqué dans votre modèle Progress.php)
+        // Équilibre pragmatique par défaut
         loadChapter(18);
     }
 }
