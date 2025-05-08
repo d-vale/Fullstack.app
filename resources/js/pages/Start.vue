@@ -244,6 +244,7 @@ function loadEndGame() {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background-color: #f1f5f9;
 }
 
 .content {
@@ -260,75 +261,40 @@ function loadEndGame() {
     align-items: center;
     justify-content: center;
     padding: 3rem;
-    background-color: var(--dark-blue);
-}
-
-.pixel-container {
-    box-shadow: 0 0 0 4px var(--red), 0 0 0 8px var(--orange);
-}
-
-.pixel-text {
-    font-family: "VT323", monospace;
-    font-size: 24px; /* Taille augmentée */
-    text-shadow: 2px 2px 0 #000;
-    color: var(--yellow);
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .spinner {
-    width: 60px; /* Taille augmentée */
-    height: 60px; /* Taille augmentée */
-    background-color: var(--orange);
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top-color: var(--primary);
+    animation: spin 1s linear infinite;
     margin-bottom: 1rem;
-    animation: pixel-spin 1s steps(8) infinite;
 }
 
-.pixel-spinner {
-    clip-path: polygon(
-        0 0,
-        50% 0,
-        50% 50%,
-        100% 50%,
-        100% 100%,
-        50% 100%,
-        50% 50%,
-        0 50%
-    );
-}
-
-@keyframes pixel-spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
+@keyframes spin {
+    to {
         transform: rotate(360deg);
     }
+}
+
+.loading p {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--primary);
 }
 
 .error {
     text-align: center;
     padding: 2rem;
-    background-color: var(--dark-blue);
-    border: 4px solid var(--red);
-}
-
-.pixel-btn {
-    padding: 0.8rem 1.2rem; /* Padding augmenté */
-    background-color: var(--blue);
-    color: white;
-    border: none;
-    font-family: "VT323", monospace;
-    font-size: 20px; /* Taille augmentée */
-    box-shadow: 4px 4px 0 #000;
-    cursor: pointer;
-    transform: translateY(-2px);
-    transition: all 0.1s steps(2);
-    text-shadow: 1px 1px 0 #000;
-}
-
-.pixel-btn:hover {
-    transform: translateY(0);
-    box-shadow: 2px 2px 0 #000;
-    background-color: var(--green);
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    color: var(--danger);
 }
 
 .reset-container {
@@ -337,21 +303,45 @@ function loadEndGame() {
 }
 
 .reset-btn {
-    background-color: var(--purple);
-    font-size: 18px;
+    padding: 0.8rem 1.5rem;
+    background-color: var(--secondary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .reset-btn:hover {
-    background-color: var(--pink);
+    background-color: var(--danger);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+    .crisis-simulator {
+        background-color: #0f172a;
+    }
+
+    .loading,
+    .error {
+        background-color: var(--secondary);
+    }
+
+    .loading p {
+        color: var(--primary-light);
+    }
+
+    .error {
+        color: var(--danger);
+    }
 }
 
 @media (max-width: 768px) {
     .content {
         padding: 1rem;
-    }
-
-    .pixel-text {
-        font-size: 20px;
     }
 }
 </style>

@@ -62,17 +62,12 @@ function logout() {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
-    background-color: #1d2b53;
+    padding: 1rem 1rem;
+    background-color: var(--primary);
     position: sticky;
     top: 0;
     z-index: 100;
-}
-
-.pixel-border {
-    box-shadow: 0 4px 0 #ff004d;
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .page-title {
@@ -80,13 +75,17 @@ function logout() {
     text-align: center;
 }
 
-.pixel-text {
+.page-title h1 {
     margin: 0;
-    font-family: "VT323", monospace;
-    font-size: 2.2rem; /* Taille augmentée */
-    color: #faef5d;
-    text-shadow: 3px 3px 0 #7e2553;
-    letter-spacing: 1px; /* Meilleur espacement avec cette police */
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1.5rem;
+    border-radius: 4px;
+    display: inline-block;
 }
 
 .actions {
@@ -95,47 +94,42 @@ function logout() {
     justify-content: flex-end;
 }
 
-.pixel-btn {
-    padding: 0.8rem 1rem;
-    background-color: #ff004d;
+.logout-btn {
+    padding: 0.7rem 1.5rem;
+    background-color: rgba(255, 255, 255, 0.15);
     color: white;
     border: none;
-    font-family: "VT323", monospace;
-    font-size: 1.1rem; /* Taille augmentée */
-    box-shadow: 0 4px 0 #7e2553;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.9rem;
     cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+    background-color: rgba(255, 255, 255, 0.25);
     transform: translateY(-2px);
-    transition: all 0.1s steps(2);
-}
-
-.pixel-btn:hover {
-    transform: translateY(0);
-    box-shadow: 0 2px 0 #7e2553;
-}
-
-.pixel-btn:active {
-    transform: translateY(2px);
-    box-shadow: 0 0 0 #7e2553;
 }
 
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
-        padding: 0.5rem;
+        padding: 1rem;
     }
 
     .page-title {
         margin: 0.8rem 0;
     }
 
-    .pixel-text {
-        font-size: 1.8rem;
+    .page-title h1 {
+        font-size: 1.4rem;
+        padding: 0.4rem 1rem;
     }
 
     .actions {
         width: 100%;
         justify-content: center;
-        margin-top: 0.8rem;
+        margin-top: 0.5rem;
     }
 }
 </style>

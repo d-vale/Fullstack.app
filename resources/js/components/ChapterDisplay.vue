@@ -20,15 +20,15 @@ function selectChoice(choice) {
 </script>
 
 <template>
-    <div class="chapter pixel-container">
-        <div class="chapter-content pixel-text" v-html="chapter.text"></div>
+    <div class="chapter">
+        <div class="chapter-content" v-html="chapter.text"></div>
 
         <div class="choices" v-if="choices.length > 0">
-            <h3 class="choices-title">VOTRE DÉCISION :</h3>
+            <h3 class="choices-title">VOTRE DÉCISION</h3>
             <div
                 v-for="choice in choices"
                 :key="choice.id"
-                class="choice pixel-btn"
+                class="choice"
                 @click="selectChoice(choice)"
             >
                 {{ choice.text }}
@@ -39,29 +39,19 @@ function selectChoice(choice) {
 
 <style scoped>
 .chapter {
-    background-color: #1d2b53;
-    border-radius: 0;
+    background-color: white;
+    border-radius: 8px;
     padding: 2rem;
     margin-top: 2rem;
-}
-
-.pixel-container {
-    box-shadow: 0 0 0 4px #ff004d, 0 0 0 8px #ffa300;
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .chapter-content {
-    font-size: 20px; /* Taille augmentée */
-    line-height: 1.5;
-    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
     white-space: pre-line;
-    color: #faef5d;
-}
-
-.pixel-text {
-    font-family: "VT323", monospace;
-    text-shadow: 2px 2px 0 #000;
+    color: var(--text-dark);
 }
 
 .choices {
@@ -71,33 +61,57 @@ function selectChoice(choice) {
 }
 
 .choices-title {
-    color: #29adff;
-    font-size: 24px; /* Taille augmentée */
-    margin-bottom: 1rem;
-    text-shadow: 2px 2px 0 #000;
-    font-family: "VT323", monospace;
+    color: var(--primary);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    border-bottom: 2px solid var(--primary-light);
+    padding-bottom: 0.5rem;
+    display: inline-block;
 }
 
 .choice {
-    padding: 1rem;
-    background-color: #7e2553;
-    border: 4px solid #ff77a8;
-    color: white;
-    font-family: "VT323", monospace;
-    font-size: 18px; /* Taille augmentée */
+    padding: 1.2rem;
+    background-color: var(--bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-dark);
+    font-size: 1rem;
     cursor: pointer;
-    transition: all 0.2s steps(2);
-    text-shadow: 1px 1px 0 #000;
+    transition: all 0.2s ease;
 }
 
 .choice:hover {
-    background-color: #ff77a8;
-    transform: translateY(-4px);
-    box-shadow: 4px 4px 0 #000;
+    background-color: var(--primary-light);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.choice:active {
-    transform: translateY(0);
-    box-shadow: 0 0 0 #000;
+@media (prefers-color-scheme: dark) {
+    .chapter {
+        background-color: var(--secondary);
+    }
+
+    .chapter-content {
+        color: var(--text-light);
+    }
+
+    .choice {
+        background-color: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.1);
+        color: var(--text-light);
+    }
+}
+
+@media (max-width: 768px) {
+    .chapter {
+        padding: 1.5rem;
+        margin-top: 1rem;
+    }
+
+    .chapter-content {
+        font-size: 1rem;
+    }
 }
 </style>

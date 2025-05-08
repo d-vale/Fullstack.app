@@ -75,87 +75,82 @@ const ressources = computed(() => {
 .metrics {
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
-    flex: 1;
-    max-width: 320px;
-    background-color: #1d2b53;
-    padding: 1rem;
-    font-family: "VT323", monospace;
-}
-
-.pixel-border {
-    box-shadow: 0 0 0 4px #ff004d, 0 0 0 8px #ffa300;
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
-}
-
-.pixel-effect::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: repeating-linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0.1),
-        rgba(255, 255, 255, 0.1) 2px,
-        transparent 2px,
-        transparent 4px
-    );
+    gap: 1rem;
+    padding: 1.5rem;
+    background-color: var(--secondary);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 350px;
 }
 
 .metric {
     display: flex;
     align-items: center;
-    font-size: 18px; /* Taille augmentée */
-    color: #faef5d;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
 }
 
 .metric-label {
-    width: 180px; /* Largeur augmentée */
-    font-weight: bold;
-    text-shadow: 2px 2px 0 #000;
+    width: 160px;
+    font-weight: 600;
+    color: var(--text-light);
 }
 
 .progress-container {
     position: relative;
     width: 150px;
-    height: 24px; /* Hauteur augmentée */
-    background-color: #7e2553;
-    border: 2px solid #ff77a8;
+    height: 26px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
     overflow: hidden;
 }
 
 .progress-bar {
     height: 100%;
-    background-color: #00e436;
-    transition: width 0.3s steps(5);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.progress-bar:nth-child(1) {
+    background-color: var(--success);
+}
+
+.progress-bar:nth-child(2) {
+    background-color: var(--primary-light);
+}
+
+.progress-bar:nth-child(3) {
+    background-color: var(--warning);
 }
 
 .progress-bar.danger {
-    background-color: #ff004d;
+    background-color: var(--danger);
 }
 
 .progress-text {
     position: absolute;
-    right: 5px;
+    right: 8px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 16px; /* Taille augmentée */
-    font-weight: bold;
-    color: #fff;
-    text-shadow: 1px 1px 0 #000;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 @media (max-width: 768px) {
     .metrics {
         max-width: 100%;
-        width: 100%;
+        padding: 1rem;
     }
 
     .metric {
-        font-size: 16px;
+        font-size: 0.9rem;
+    }
+
+    .metric-label {
+        width: 140px;
     }
 }
 </style>

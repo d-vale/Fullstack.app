@@ -8,41 +8,42 @@ import Start from "./pages/Start.vue";
 
 <style>
 /* Police pixelisée avec support des accents */
-@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 :root {
-    --dark-blue: #1d2b53;
-    --purple: #7e2553;
-    --green: #00e436;
-    --red: #ff004d;
-    --orange: #ffa300;
-    --blue: #29adff;
-    --yellow: #faef5d;
-    --pink: #ff77a8;
+    --primary: #1e40af;
+    --primary-light: #3b82f6;
+    --secondary: #0f172a;
+    --accent: #f97316;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --bg-dark: #0f172a;
+    --bg-light: #f8fafc;
+    --text-light: #f8fafc;
+    --text-dark: #1e293b;
+    --border-color: #e2e8f0;
 }
 
 body {
     margin: 0;
     padding: 0;
-    background-color: #222034;
-    font-family: "VT323", monospace;
-    font-size: 20px; /* Taille de base augmentée */
-    color: var(--yellow);
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
+    background-color: var(--bg-light);
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    color: var(--text-dark);
+    line-height: 1.5;
     overflow-x: hidden;
-
-    /* Effet de pixelisation du fond */
-    background-image: linear-gradient(
-            to right,
-            rgba(0, 0, 0, 0.05) 1px,
-            transparent 1px
-        ),
-        linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
-    background-size: 8px 8px;
 }
 
 * {
     box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+    }
 }
 </style>
