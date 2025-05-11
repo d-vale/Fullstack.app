@@ -68,7 +68,7 @@ This project is built with:
 
     ```
     git clone https://github.com/d-vale/Fullstack.app.git
-    cd crisis-management-simulator
+    cd Fullstack.app
     ```
 
 2. Install PHP dependencies:
