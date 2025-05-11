@@ -19,10 +19,10 @@ class DatabaseSeeder extends Seeder
 
         // Exécuter les seeders dans l'ordre approprié
         $this->call([
-            UserSeeder::class,      // D'abord les utilisateurs
-            ChapterSeeder::class,   // Ensuite les chapitres
-            ChoiceSeeder::class,    // Puis les choix
-            ProgressSeeder::class,  // Enfin les progressions
+            UserSeeder::class,     
+            ChapterSeeder::class,
+            ChoiceSeeder::class,
+            ProgressSeeder::class,
         ]);
 
         // Réactiver les contraintes de clés étrangères

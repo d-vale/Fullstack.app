@@ -16,18 +16,16 @@ class ProgressSeeder extends Seeder
      */
     public function run(): void
     {
-        // Supprimer les données existantes
         Progress::truncate();
 
         // Pour chaque utilisateur, créer une progression initiale
         $users = User::all();
 
         foreach ($users as $user) {
-            // Créer la progression initiale pour le chapitre 1
             Progress::create([
                 'user_id' => $user->id,
-                'chapter_id' => 1, // Premier chapitre
-                'confiance' => 50, // Valeurs initiales du scénario
+                'chapter_id' => 1,
+                'confiance' => 50,
                 'ressources' => 100,
                 'impact' => 30,
                 'crise' => 30,

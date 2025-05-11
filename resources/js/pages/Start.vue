@@ -35,10 +35,7 @@ function loadUserProgress() {
                 crise: progress.data.crise || 15,
             };
 
-            if (progress.data.chapter_id >= 16) {
-                loadEndGame(progress.data.chapter_id);
-                loading.value = false;
-            } else if (progress.data.chapter_id) {
+            if (progress.data.chapter_id) {
                 loadChapter(progress.data.chapter_id);
             } else {
                 loadFirstChapter();
@@ -74,7 +71,13 @@ function loadChapter(chapterId) {
     watch(reponse, (chapter) => {
         if (chapter && chapter.success && chapter.data) {
             currentChapter.value = chapter.data;
-            loadChoicesForChapter(chapterId);
+
+            // Ne charger les choix que si on n'est pas dans un chapitre de fin
+            if (chapterId <= 15) {
+                loadChoicesForChapter(chapterId);
+            } else {
+                choices.value = []; // Pas de choix pour les chapitres de fin
+            }
         } else {
             console.error(fetchError);
             error.value = "Erreur lors du chargement du chapitre";
@@ -119,10 +122,8 @@ function makeChoice(choice) {
                 crise: progressUpdate.data.crise,
             };
 
-            if (progressUpdate.data.chapter_id >= 16) {
-                // Chapitre de fin de jeu
-                loadChapter(progressUpdate.data.chapter_id);
-            } else if (progressUpdate.data.chapter_id) {
+            // Charger le chapitre suivant (déterminé par le controller)
+            if (progressUpdate.data.chapter_id) {
                 loadChapter(progressUpdate.data.chapter_id);
             }
         } else {
@@ -154,75 +155,6 @@ function resetProgress() {
             loading.value = false;
         }
     });
-}
-
-function loadEndGame(endChapterId) {
-    if (endChapterId) {
-        // Si on a déjà un chapitre de fin, le charger directement
-        loadChapter(endChapterId);
-        return;
-    }
-
-    // Déterminer quelle fin montrer en fonction des métriques
-
-    // 1. Leader visionnaire
-    if (
-        userProgress.value.confiance >= 75 &&
-        userProgress.value.ressources > 20 &&
-        userProgress.value.impact < 20 &&
-        userProgress.value.crise < 10
-    ) {
-        loadChapter(16);
-    }
-    // 2. Gestionnaire efficace
-    else if (
-        userProgress.value.confiance > 60 &&
-        userProgress.value.impact < 35 &&
-        userProgress.value.crise < 25
-    ) {
-        loadChapter(17);
-    }
-    // 3. Équilibre pragmatique
-    else if (
-        userProgress.value.confiance >= 40 &&
-        userProgress.value.confiance <= 60 &&
-        userProgress.value.impact >= 25 &&
-        userProgress.value.impact <= 45 &&
-        userProgress.value.crise < 40
-    ) {
-        loadChapter(18);
-    }
-    // 4. Résolution coûteuse
-    else if (
-        userProgress.value.confiance >= 30 &&
-        userProgress.value.confiance <= 50 &&
-        userProgress.value.ressources < 15 &&
-        userProgress.value.crise < 50
-    ) {
-        loadChapter(19);
-    }
-    // 5. Échec stratégique
-    else if (
-        userProgress.value.confiance < 30 &&
-        userProgress.value.impact > 50 &&
-        userProgress.value.crise >= 30 &&
-        userProgress.value.crise <= 60
-    ) {
-        loadChapter(20);
-    }
-    // 6. Catastrophe nationale
-    else if (
-        userProgress.value.confiance < 20 &&
-        userProgress.value.impact > 60 &&
-        userProgress.value.crise > 60
-    ) {
-        loadChapter(21);
-    }
-    // Cas par défaut si aucun critère ne correspond
-    else {
-        // Équilibre pragmatique par défaut
-        loadChapter(18);
-    }
 }
 
 function returnToDashboard() {

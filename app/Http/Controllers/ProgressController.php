@@ -110,7 +110,7 @@ class ProgressController extends Controller
     {
         try {
             // Validate the request
-                $request->validate([
+            $request->validate([
                 'choice_id' => 'required|integer|exists:choices,id',
             ]);
 
@@ -148,11 +148,17 @@ class ProgressController extends Controller
                 $progress->ressources = max(0, min(100, $progress->ressources + $choice->ressources));
                 $progress->impact = max(0, min(100, $progress->impact + $choice->impact));
                 $progress->crise = max(0, min(100, $progress->crise + $choice->crise));
-                
-                if($choice->next_chapter){
+
+                if ($choice->next_chapter !== null) {
                     $progress->chapter_id = $choice->next_chapter;
                 } else {
-                    $progress->chapter_id = 16;
+                    if ($progress->confiance >= 70 && $progress->crise < 30 && $progress->impact < 40) {
+                        $progress->chapter_id = 16;
+                    } elseif ($progress->confiance < 40 || $progress->crise > 60 || $progress->impact > 70) {
+                        $progress->chapter_id = 18;
+                    } else {
+                        $progress->chapter_id = 17;
+                    }
                 }
 
                 // Save the updated progress
@@ -167,7 +173,6 @@ class ProgressController extends Controller
                     'message' => 'Progress updated successfully'
                 ]);
             } catch (\Exception $e) {
-                // Rollback the transaction if something goes wrong
                 DB::rollBack();
                 throw $e;
             }
