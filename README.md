@@ -117,7 +117,7 @@ This project is built with:
 9. Build frontend assets:
 
     ```
-    npm run dev
+    npm run build
     ```
 
 10. Start the development server:
