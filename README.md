@@ -128,6 +128,20 @@ This project is built with:
 
 11. Access the application at `http://localhost:8000`
 
+## Test Accounts
+
+Two test accounts are created by default when running the seeders:
+
+### Admin Account:
+- **Email**: admin@example.com
+- **Password**: password
+
+### Regular User Account:
+- **Email**: user@example.com
+- **Password**: password
+
+Use these credentials to test the application without needing to register new accounts.
+
 ## License
 
 This project is licensed under the MIT License.
