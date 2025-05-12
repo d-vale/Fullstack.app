@@ -162,7 +162,7 @@
             <a href="/">
                 <x-application-logo class="w-20 h-20" />
             </a>
-            <h1 class="auth-title">Crisis Management Simulator</h1>
+            <h1 class="auth-title">Simulation Center</h1>
         </div>
 
         <div class="w-full max-w-md auth-card">

@@ -3,6 +3,12 @@ import { ref, onMounted } from "vue";
 import Start from "./pages/Start.vue";
 import Footer from "@/components/Footer.vue";
 
+// Importez vos images
+import crisisSimulatorImage from "../assets/images/crisis-simulator.png";
+import pandemicResponseImage from "../assets/images/life-simulator.png";
+import economicStrategistImage from "../assets/images/labyrinthe-ombres.png";
+import diplomaticTensionsImage from "../assets/images/dernier-appel.png";
+
 // État
 const user = ref({ name: "Invité" });
 const isLoading = ref(true);
@@ -15,18 +21,21 @@ const games = ref([
         title: "Crisis Simulator",
         description: "Gérez une crise nationale en temps réel",
         available: true,
+        image: crisisSimulatorImage,
     },
     {
         id: "pandemic-response",
         title: "Pandemic Response",
         description: "Contrôlez une pandémie mondiale (Bientôt disponible)",
         available: false,
+        image: pandemicResponseImage,
     },
     {
         id: "economic-strategist",
         title: "Economic Strategist",
         description: "Dirigez l'économie d'un pays (Bientôt disponible)",
         available: false,
+        image: economicStrategistImage,
     },
     {
         id: "diplomatic-tensions",
@@ -34,6 +43,7 @@ const games = ref([
         description:
             "Naviguez dans les relations internationales (Bientôt disponible)",
         available: false,
+        image: diplomaticTensionsImage,
     },
 ]);
 
@@ -111,7 +121,11 @@ function logout() {
                     :class="{ disabled: !game.available }"
                 >
                     <div class="game-image">
-                        <div class="image-placeholder"></div>
+                        <img
+                            :src="game.image"
+                            alt="game.title"
+                            class="game-image-content"
+                        />
                     </div>
                     <div class="game-info">
                         <h3>{{ game.title }}</h3>
@@ -266,6 +280,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
+}
+
+.game-image-content {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 
 .image-placeholder {
