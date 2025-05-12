@@ -5,9 +5,9 @@ import Footer from "@/components/Footer.vue";
 
 // Importez vos images
 import crisisSimulatorImage from "../assets/images/crisis-simulator.png";
-import pandemicResponseImage from "../assets/images/life-simulator.png";
-import economicStrategistImage from "../assets/images/labyrinthe-ombres.png";
-import diplomaticTensionsImage from "../assets/images/dernier-appel.png";
+import lifeSimulatorImage from "../assets/images/life-simulator.png";
+import labyrintheOmbresImage from "../assets/images/labyrinthe-ombres.png";
+import dernierAppelImage from "../assets/images/dernier-appel.png";
 
 // État
 const user = ref({ name: "Invité" });
@@ -24,26 +24,25 @@ const games = ref([
         image: crisisSimulatorImage,
     },
     {
-        id: "pandemic-response",
-        title: "Pandemic Response",
-        description: "Contrôlez une pandémie mondiale (Bientôt disponible)",
+        id: "life-simulator",
+        title: "Life Simulator",
+        description: "Contrôlez une vie",
         available: false,
-        image: pandemicResponseImage,
+        image: lifeSimulatorImage,
     },
     {
-        id: "economic-strategist",
-        title: "Economic Strategist",
-        description: "Dirigez l'économie d'un pays (Bientôt disponible)",
+        id: "labyrinthe-ombres",
+        title: "Labyrinthe des Ombres",
+        description: "Évitez les pièges et trouvez la sortie",
         available: false,
-        image: economicStrategistImage,
+        image: labyrintheOmbresImage,
     },
     {
-        id: "diplomatic-tensions",
-        title: "Diplomatic Tensions",
-        description:
-            "Naviguez dans les relations internationales (Bientôt disponible)",
+        id: "dernier-appel",
+        title: "Dernier Appel",
+        description: "Évitez la guerre nucléaire",
         available: false,
-        image: diplomaticTensionsImage,
+        image: dernierAppelImage,
     },
 ]);
 
