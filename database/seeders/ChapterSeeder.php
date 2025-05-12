@@ -18,63 +18,63 @@ class ChapterSeeder extends Seeder
         $chapters = [
             [
                 'id' => 1,
-                'text' => "Chapitre 1 : Alerte initiale\n\n**Situation** : 6h00 du matin. Votre téléphone sonne. Les premiers rapports font état d'anomalies dans plusieurs systèmes informatiques gouvernementaux. L'origine est encore inconnue.\n\n**Choix : Première réaction**"
+                'text' => "Chapitre 1 : Alerte initiale\n\nSituation : 6h00 du matin. Votre téléphone sonne. Les premiers rapports font état d'anomalies dans plusieurs systèmes informatiques gouvernementaux. L'origine est encore inconnue.\n\nChoix : Première réaction"
             ],
             [
                 'id' => 2,
-                'text' => "Chapitre 2 : Évaluation de la menace\n\n**Situation** : Les experts confirment une attaque coordonnée. Les systèmes bancaires montrent des signes de vulnérabilité. Les hôpitaux signalent des dysfonctionnements.\n\n**Choix : Priorités immédiates**"
+                'text' => "Chapitre 2 : Évaluation de la menace\n\nSituation : Les experts confirment une attaque coordonnée. Les systèmes bancaires montrent des signes de vulnérabilité. Les hôpitaux signalent des dysfonctionnements.\n\nChoix : Priorités immédiates"
             ],
             [
                 'id' => 3,
-                'text' => "Chapitre 3 : Communication publique\n\n**Situation** : Les médias commencent à rapporter des pannes. Les réseaux sociaux s'agitent. Une communication officielle devient nécessaire.\n\n**Choix : Stratégie de communication**"
+                'text' => "Chapitre 3 : Communication publique\n\nSituation : Les médias commencent à rapporter des pannes. Les réseaux sociaux s'agitent. Une communication officielle devient nécessaire.\n\nChoix : Stratégie de communication"
             ],
             [
                 'id' => 4,
-                'text' => "Chapitre 4 : Mobilisation des ressources\n\n**Situation** : L'ampleur de l'attaque se précise. Vous devez mobiliser des ressources supplémentaires pour contenir la crise.\n\n**Choix : Allocation des ressources**"
+                'text' => "Chapitre 4 : Mobilisation des ressources\n\nSituation : L'ampleur de l'attaque se précise. Vous devez mobiliser des ressources supplémentaires pour contenir la crise.\n\nChoix : Allocation des ressources"
             ],
             [
                 'id' => 5,
-                'text' => "Chapitre 5 : Premières conséquences\n\n**Situation** : Les premiers effets se font sentir. Des distributeurs automatiques dysfonctionnent. Certains services hospitaliers sont perturbés.\n\n**Choix : Gestion de l'impact immédiat**"
+                'text' => "Chapitre 5 : Premières conséquences\n\nSituation : Les premiers effets se font sentir. Des distributeurs automatiques dysfonctionnent. Certains services hospitaliers sont perturbés.\n\nChoix : Gestion de l'impact immédiat"
             ],
             [
                 'id' => 6,
-                'text' => "Chapitre 6 : Escalade de la crise\n\n**Situation** : L'attaque s'intensifie. Le réseau électrique montre des signes de faiblesse. La panique commence à gagner la population.\n\n**Choix : Mesures d'urgence**"
+                'text' => "Chapitre 6 : Escalade de la crise\n\nSituation : L'attaque s'intensifie. Le réseau électrique montre des signes de faiblesse. La panique commence à gagner la population.\n\nChoix : Mesures d'urgence"
             ],
             [
                 'id' => 7,
-                'text' => "Chapitre 7 : Identification des attaquants\n\n**Situation** : Les experts ont des pistes sur l'origine de l'attaque. Plusieurs théories émergent : groupe criminel, état étranger, ou terroristes.\n\n**Choix : Approche stratégique**"
+                'text' => "Chapitre 7 : Identification des attaquants\n\nSituation : Les experts ont des pistes sur l'origine de l'attaque. Plusieurs théories émergent : groupe criminel, état étranger, ou terroristes.\n\nChoix : Approche stratégique"
             ],
             [
                 'id' => 8,
-                'text' => "Chapitre 8 : Pic de la crise\n\n**Situation** : La situation atteint son paroxysme. Des pannes électriques touchent plusieurs régions. Les hôpitaux fonctionnent sur générateurs.\n\n**Choix : Décisions critiques**"
+                'text' => "Chapitre 8 : Pic de la crise\n\nSituation : La situation atteint son paroxysme. Des pannes électriques touchent plusieurs régions. Les hôpitaux fonctionnent sur générateurs.\n\nChoix : Décisions critiques"
             ],
             [
                 'id' => 9,
-                'text' => "Chapitre 9 : Gestion de la panique\n\n**Situation** : La population est inquiète. Des mouvements de panique sont observés. Les fausses informations circulent massivement.\n\n**Choix : Contrôle de l'information**"
+                'text' => "Chapitre 9 : Gestion de la panique\n\nSituation : La population est inquiète. Des mouvements de panique sont observés. Les fausses informations circulent massivement.\n\nChoix : Contrôle de l'information"
             ],
             [
                 'id' => 10,
-                'text' => "Chapitre 10 : Tournant de la crise\n\n**Situation** : Vos efforts commencent à porter leurs fruits. Certains systèmes sont restaurés mais la menace persiste.\n\n**Choix : Stratégie de recovery**"
+                'text' => "Chapitre 10 : Tournant de la crise\n\nSituation : Vos efforts commencent à porter leurs fruits. Certains systèmes sont restaurés mais la menace persiste.\n\nChoix : Stratégie de recovery"
             ],
             [
                 'id' => 11,
-                'text' => "Chapitre 11 : Stabilisation\n\n**Situation** : La phase aiguë semble passée. Les systèmes critiques sont stabilisés mais restent vulnérables.\n\n**Choix : Consolidation**"
+                'text' => "Chapitre 11 : Stabilisation\n\nSituation : La phase aiguë semble passée. Les systèmes critiques sont stabilisés mais restent vulnérables.\n\nChoix : Consolidation"
             ],
             [
                 'id' => 12,
-                'text' => "Chapitre 12 : Bilan et responsabilités\n\n**Situation** : L'heure du bilan approche. Des questions sur la préparation et la réponse à la crise émergent.\n\n**Choix : Gestion politique**"
+                'text' => "Chapitre 12 : Bilan et responsabilités\n\nSituation : L'heure du bilan approche. Des questions sur la préparation et la réponse à la crise émergent.\n\nChoix : Gestion politique"
             ],
             [
                 'id' => 13,
-                'text' => "Chapitre 13 : Reconstruction\n\n**Situation** : Il faut maintenant reconstruire les systèmes et restaurer la confiance. Les choix faits détermineront la résilience future.\n\n**Choix : Plan de reconstruction**"
+                'text' => "Chapitre 13 : Reconstruction\n\nSituation : Il faut maintenant reconstruire les systèmes et restaurer la confiance. Les choix faits détermineront la résilience future.\n\nChoix : Plan de reconstruction"
             ],
             [
                 'id' => 14,
-                'text' => "Chapitre 14 : Dimension internationale\n\n**Situation** : La crise a eu des répercussions internationales. Votre gestion est scrutée par la communauté internationale.\n\n**Choix : Positionnement global**"
+                'text' => "Chapitre 14 : Dimension internationale\n\nSituation : La crise a eu des répercussions internationales. Votre gestion est scrutée par la communauté internationale.\n\nChoix : Positionnement global"
             ],
             [
                 'id' => 15,
-                'text' => "Chapitre 15 : Héritage et réformes\n\n**Situation** : La crise touche à sa fin. Il est temps de définir les réformes structurelles pour prévenir de futures crises.\n\n**Choix : Vision d'avenir**"
+                'text' => "Chapitre 15 : Héritage et réformes\n\nSituation : La crise touche à sa fin. Il est temps de définir les réformes structurelles pour prévenir de futures crises.\n\nChoix : Vision d'avenir"
             ],
             [
                 'id' => 16,

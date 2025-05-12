@@ -11,8 +11,8 @@ const emit = defineEmits(["return-to-dashboard"]);
 const props = defineProps({
     userData: {
         type: Object,
-        default: () => ({})
-    }
+        default: () => ({}),
+    },
 });
 
 const userName = ref("");
@@ -174,7 +174,6 @@ function returnToDashboard() {
 </script>
 
 <template>
-
     <div class="crisis-simulator">
         <Header :userName="userName" :metrics="userProgress" />
 
@@ -234,7 +233,7 @@ function returnToDashboard() {
 }
 
 .top-controls {
-    margin-bottom: 1.5rem;
+    margin-bottom: 5px;
     display: flex;
     justify-content: space-between;
 }

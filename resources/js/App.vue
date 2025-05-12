@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import Start from "./pages/Start.vue";
+import Crisis from "./pages/Crisis.vue";
 import Footer from "@/components/Footer.vue";
 
 // Importez vos images
@@ -149,7 +149,7 @@ function logout() {
     </div>
 
     <!-- Crisis Simulator view -->
-    <Start
+    <Crisis
         v-else-if="currentView === 'crisis-simulator'"
         @return-to-dashboard="returnToDashboard"
         :user-data="user"

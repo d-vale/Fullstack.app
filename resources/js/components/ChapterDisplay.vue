@@ -42,7 +42,8 @@ function selectChoice(choice) {
     background-color: white;
     border-radius: 8px;
     padding: 2rem;
-    margin-top: 2rem;
+    padding-top: 0.5rem;
+    margin-top: 1rem;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
