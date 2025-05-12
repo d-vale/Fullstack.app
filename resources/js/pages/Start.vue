@@ -174,6 +174,7 @@ function returnToDashboard() {
 </script>
 
 <template>
+
     <div class="crisis-simulator">
         <Header :userName="userName" :metrics="userProgress" />
 
