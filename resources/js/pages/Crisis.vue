@@ -221,7 +221,7 @@ function returnToDashboard() {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #f1f5f9;
+    background-color: var(--bg-light);
 }
 
 .content {
@@ -243,8 +243,7 @@ function returnToDashboard() {
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1.2rem;
-    background-color: var(--secondary);
-    color: white;
+    color: var(--text-dark);
     border: none;
     border-radius: 4px;
     font-weight: 600;
@@ -255,6 +254,8 @@ function returnToDashboard() {
 
 .return-btn:hover {
     background-color: var(--primary);
+    color: white;
+
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -323,8 +324,8 @@ function returnToDashboard() {
 
 .reset-btn {
     padding: 0.8rem 1.5rem;
-    background-color: var(--secondary);
-    color: white;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
     border: none;
     border-radius: 4px;
     font-weight: 600;
@@ -335,6 +336,7 @@ function returnToDashboard() {
 
 .reset-btn:hover {
     background-color: var(--danger);
+    color: white;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -356,6 +358,12 @@ function returnToDashboard() {
     .error {
         color: var(--danger);
     }
+    .return-btn,
+    .reset-btn {
+        background-color: var(--secondary);
+        color: white;
+    }
+
 }
 
 @media (max-width: 768px) {
