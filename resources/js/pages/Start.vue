@@ -7,6 +7,13 @@ import { useFetchJson } from "../composables/useFetchJson.js";
 
 // Définition des émetteurs d'événements pour communiquer avec le parent
 const emit = defineEmits(["return-to-dashboard"]);
+// Définition des props pour recevoir les données de l'utilisateur
+const props = defineProps({
+    userData: {
+        type: Object,
+        default: () => ({})
+    }
+});
 
 const userName = ref("");
 const userProgress = ref({
@@ -21,6 +28,10 @@ const currentChapter = ref(null);
 const choices = ref([]);
 
 onMounted(() => {
+    // Utiliser les données utilisateur reçues du parent
+    if (props.userData && props.userData.name) {
+        userName.value = props.userData.name;
+    }
     loadUserProgress();
 });
 
@@ -28,7 +39,6 @@ function loadUserProgress() {
     const { data: reponse, error: fetchError } = useFetchJson("/v1/progress");
     watch(reponse, (progress) => {
         if (progress && progress.success && progress.data) {
-            userName.value = progress.data.user_name || "Invité";
             userProgress.value = {
                 confiance: progress.data.confiance || 65,
                 ressources: progress.data.ressources || 100,

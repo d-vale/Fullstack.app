@@ -152,6 +152,7 @@ function logout() {
     <Start
         v-else-if="currentView === 'crisis-simulator'"
         @return-to-dashboard="returnToDashboard"
+        :user-data="user"
     />
 </template>
 
