@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import Start from "./pages/Start.vue";
+import Footer from "@/components/Footer.vue";
 
 // État
 const user = ref({ name: "Invité" });
@@ -130,11 +131,7 @@ function logout() {
                 </div>
             </div>
         </main>
-
-        <!-- Footer -->
-        <footer class="app-footer">
-            <p>© 2025 Crisis Management Simulator | Tous droits réservés</p>
-        </footer>
+        <Footer />
     </div>
 
     <!-- Crisis Simulator view -->
@@ -315,15 +312,6 @@ body {
 .start-btn:disabled {
     background-color: #ccc;
     cursor: not-allowed;
-}
-
-/* Footer */
-.app-footer {
-    padding: 1.5rem;
-    text-align: center;
-    background-color: var(--secondary);
-    color: var(--text-light);
-    font-size: 0.9rem;
 }
 
 /* Dark mode */

@@ -2,51 +2,56 @@
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
+        <h2 class="text-xl font-semibold mb-6 text-center">{{ __('Create an Account') }}</h2>
+
         <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        <div class="mb-4">
+            <label for="name" class="form-label">{{ __('Name') }}</label>
+            <input id="name" class="form-input" type="text" name="name" value="{{ old('name') }}" required
+                autofocus autocomplete="name" />
+            @error('name')
+                <p class="error-message">{{ $message }}</p>
+            @enderror
         </div>
 
         <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div class="mb-4">
+            <label for="email" class="form-label">{{ __('Email') }}</label>
+            <input id="email" class="form-input" type="email" name="email" value="{{ old('email') }}" required
+                autocomplete="username" />
+            @error('email')
+                <p class="error-message">{{ $message }}</p>
+            @enderror
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div class="mb-4">
+            <label for="password" class="form-label">{{ __('Password') }}</label>
+            <input id="password" class="form-input" type="password" name="password" required
+                autocomplete="new-password" />
+            @error('password')
+                <p class="error-message">{{ $message }}</p>
+            @enderror
         </div>
 
         <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        <div class="mb-6">
+            <label for="password_confirmation" class="form-label">{{ __('Confirm Password') }}</label>
+            <input id="password_confirmation" class="form-input" type="password" name="password_confirmation" required
+                autocomplete="new-password" />
+            @error('password_confirmation')
+                <p class="error-message">{{ $message }}</p>
+            @enderror
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
+        <div class="flex items-center justify-between mb-6">
+            <a class="auth-link text-sm" href="{{ route('login') }}">
+                {{ __('Already have an account?') }}
             </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
         </div>
+
+        <button type="submit" class="auth-button">
+            {{ __('Register') }}
+        </button>
     </form>
 </x-guest-layout>

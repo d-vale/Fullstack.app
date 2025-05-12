@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import Header from "../components/Header.vue";
+import Footer from "../components/Footer.vue";
 import ChapterDisplay from "../components/ChapterDisplay.vue";
 import { useFetchJson } from "../composables/useFetchJson.js";
 
@@ -200,6 +201,7 @@ function returnToDashboard() {
             </div>
         </main>
     </div>
+    <Footer />
 </template>
 
 <style scoped>
