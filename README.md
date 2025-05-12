@@ -67,8 +67,8 @@ This project is built with:
 1. Clone the repository:
 
     ```
-    git clone https://github.com/d-vale/Fullstack.app.git
-    cd Fullstack.app
+    git clone https://github.com/d-vale/Simulation-center.git
+    cd Simulation-center
     ```
 
 2. Install PHP dependencies:
