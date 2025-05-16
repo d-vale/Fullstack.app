@@ -43,11 +43,14 @@ class ChoiceController extends Controller
     public function getChoiceImpacts(int $choiceId): JsonResponse
     {
         try {
-            $choice = Choice::with('impacts')->findOrFail($choiceId);
+            $choice = Choice::findOrFail($choiceId);
+
+            // Use the getImpacts method from the Choice model
+            $impacts = $choice->getImpacts();
 
             return response()->json([
                 'success' => true,
-                'data' => $choice->impacts
+                'data' => $impacts
             ]);
         } catch (\Exception $e) {
             return response()->json([
