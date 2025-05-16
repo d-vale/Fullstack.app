@@ -25,10 +25,10 @@ class ProgressSeeder extends Seeder
             Progress::create([
                 'user_id' => $user->id,
                 'chapter_id' => 1,
-                'confiance' => 50,
+                'confiance' => 65,
                 'ressources' => 100,
                 'impact' => 30,
-                'crise' => 30,
+                'crise' => 15,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
