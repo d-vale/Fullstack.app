@@ -46,8 +46,8 @@ This project is built with:
 ### Progress (Authentication Required)
 
 -   `GET /v1/progress` - Get the current user's progress
--   `POST /v1/progress/update` - Update progress based on a choice
--   `POST /v1/progress/reset` - Reset the user's progress
+-   `PATCH /v1/progress/update` - Update progress based on a choice
+-   `PATCH /v1/progress/reset` - Reset the user's progress
 
 ### Admin (Authentication and Admin Required)
 
