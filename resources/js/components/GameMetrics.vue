@@ -17,10 +17,7 @@ const props = defineProps({
 const confiance = computed(() => `${props.metrics.confiance}%`);
 const impact = computed(() => `${props.metrics.impact}%`);
 const crise = computed(() => `${props.metrics.crise}%`);
-const ressources = computed(() => {
-    const percentage = Math.min(props.metrics.ressources, 100);
-    return `${percentage}%`;
-});
+const ressources = computed(() => `${props.metrics.ressources}%`);
 </script>
 
 <template>

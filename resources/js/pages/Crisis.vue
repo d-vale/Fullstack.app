@@ -35,6 +35,7 @@ onMounted(() => {
     loadUserProgress();
 });
 
+
 function loadUserProgress() {
     const { data: reponse, error: fetchError } = useFetchJson("/v1/progress");
     watch(reponse, (progress) => {

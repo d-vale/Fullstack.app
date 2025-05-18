@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 import Crisis from "./pages/Crisis.vue";
 import Footer from "@/components/Footer.vue";
+import GameCard from "@/components/GameCard.vue";
 
 // Importez vos images
 import crisisSimulatorImage from "../assets/images/crisis-simulator.png";
@@ -113,35 +114,12 @@ function logout() {
             <h2>SÉLECTIONNEZ UNE SIMULATION</h2>
 
             <div class="games-grid">
-                <div
+                <GameCard
                     v-for="game in games"
                     :key="game.id"
-                    class="game-card"
-                    :class="{ disabled: !game.available }"
-                >
-                    <div class="game-image">
-                        <img
-                            :src="game.image"
-                            alt="game.title"
-                            class="game-image-content"
-                        />
-                    </div>
-                    <div class="game-info">
-                        <h3>{{ game.title }}</h3>
-                        <p>{{ game.description }}</p>
-                        <button
-                            @click="startGame(game.id)"
-                            class="start-btn"
-                            :disabled="!game.available"
-                        >
-                            {{
-                                game.available
-                                    ? "DÉMARRER"
-                                    : "BIENTÔT DISPONIBLE"
-                            }}
-                        </button>
-                    </div>
-                </div>
+                    :game="game"
+                    @start-game="startGame"
+                />
             </div>
         </main>
         <Footer />
@@ -244,7 +222,7 @@ body {
     margin-bottom: 2rem;
     text-align: center;
     color: var(--primary);
-    border-bottom: 2px solid var(--primary-light);
+    border-bottom: 2px solid var(--primary);
     padding-bottom: 0.5rem;
     display: inline-block;
 }
@@ -254,110 +232,15 @@ body {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 2rem;
 }
-
-/* Game cards */
-.game-card {
-    background-color: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.game-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-.game-card.disabled {
-    opacity: 0.6;
-    filter: grayscale(40%);
-}
-
-.game-image {
-    height: 160px;
-    background-color: var(--primary-light);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.game-image-content {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
-
-.image-placeholder {
-    width: 60px;
-    height: 60px;
-    background-color: white;
-    opacity: 0.2;
-    border-radius: 50%;
-}
-
-.game-info {
-    padding: 1.5rem;
-}
-
-.game-info h3 {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-    color: var(--secondary);
-}
-
-.game-info p {
-    font-size: 0.9rem;
-    color: var(--text-dark);
-    opacity: 0.8;
-    margin-bottom: 1.2rem;
-}
-
-.start-btn {
-    width: 100%;
-    padding: 0.75rem;
-    background-color: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.start-btn:hover:not(:disabled) {
-    background-color: var(--primary-light);
-}
-
-.start-btn:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-/* Dark mode */
 @media (prefers-color-scheme: dark) {
     body {
         background-color: var(--bg-dark);
-        color: var(--text-light);
     }
-
-    .game-card {
-        background-color: #1a202c;
-    }
-
-    .game-info h3 {
-        color: var(--text-light);
-    }
-
-    .game-info p {
-        color: var(--text-light);
-        opacity: 0.7;
+    .game-selection h2 {
+        color: var(--primary-light);
+        border-bottom: 2px solid var(--primary-light);
     }
 }
-
-/* Responsive */
 @media (max-width: 768px) {
     .app-header {
         flex-direction: column;
